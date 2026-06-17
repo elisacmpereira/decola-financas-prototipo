@@ -7,265 +7,280 @@
 <title>Decola Finanças — Protótipo</title>
 <style>
   :root{
-    --laranja:#FF7A00;
-    --laranja-escuro:#E56700;
-    --laranja-claro:#FFF3E8;
-    --verde:#2B9D5F;
-    --vermelho:#E04A3F;
-    --cinza:#6B7280;
-    --cinza-claro:#F4F5F7;
-    --texto:#1F2430;
-    --borda:#ECECEC;
+    --laranja:#FF7A00;--laranja-escuro:#E56700;--laranja-claro:#FFF3E8;
+    --verde:#2B9D5F;--verde-claro:#E6F6EE;--vermelho:#E04A3F;
+    --cinza:#6B7280;--cinza-claro:#F4F5F7;--texto:#1F2430;--borda:#ECECEC;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html{font-size:16px}
-  body{
-    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    background:var(--cinza-claro);
-    color:var(--texto);
-    line-height:1.45;
-    padding-bottom:env(safe-area-inset-bottom);
-  }
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--cinza-claro);
+    color:var(--texto);line-height:1.45;padding-bottom:78px}
 
-  /* ===== Topo ===== */
-  header{
-    background:#fff;border-bottom:1px solid var(--borda);
-    padding:12px 16px;
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-    position:sticky;top:0;z-index:10;
+  header{background:#fff;border-bottom:1px solid var(--borda);padding:12px 16px;
     padding-top:calc(12px + env(safe-area-inset-top));
-  }
+    display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:10}
   .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px}
   .logo .marca{color:var(--laranja)}
-  .foguete{width:32px;height:32px;border-radius:9px;background:var(--laranja);
-    display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-  .avatar{width:34px;height:34px;border-radius:50%;background:var(--laranja-claro);
-    color:var(--laranja);font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .foguete{width:32px;height:32px;border-radius:9px;background:var(--laranja);display:flex;
+    align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--laranja-claro);color:var(--laranja);
+    font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-  .wrap{max-width:1000px;margin:0 auto;padding:16px}
+  .wrap{max-width:760px;margin:0 auto;padding:16px}
+  .view{display:none}
+  .view.on{display:block}
+
   .saudacao{font-size:19px;font-weight:700}
   .negocio{color:var(--cinza);font-size:13px;margin-bottom:14px}
-  .periodo{display:flex;background:#fff;border:1px solid var(--borda);
-    border-radius:999px;padding:4px;gap:4px;font-size:13px;margin-bottom:18px;
-    overflow:auto;-webkit-overflow-scrolling:touch}
+  .periodo{display:flex;background:#fff;border:1px solid var(--borda);border-radius:999px;padding:4px;
+    gap:4px;font-size:13px;margin-bottom:18px;width:fit-content}
   .periodo span{padding:7px 16px;border-radius:999px;cursor:pointer;color:var(--cinza);white-space:nowrap}
   .periodo span.on{background:var(--laranja);color:#fff;font-weight:600}
 
-  /* ===== Cards KPI (mobile-first: 2 colunas) ===== */
-  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
-  .card{background:#fff;border:1px solid var(--borda);border-radius:16px;padding:16px}
+  .card{background:#fff;border:1px solid var(--borda);border-radius:16px;padding:16px;margin-bottom:16px}
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
   .kpi .rotulo{font-size:13px;color:var(--cinza);display:flex;align-items:center;gap:6px}
-  .kpi .valor{font-size:23px;font-weight:800;margin-top:6px;line-height:1.1}
+  .kpi .valor{font-size:22px;font-weight:800;margin-top:6px;line-height:1.1}
   .kpi .pe{font-size:12px;color:var(--cinza);margin-top:3px}
   .v-entrou{color:var(--verde)}.v-saiu{color:var(--vermelho)}.v-retirada{color:var(--laranja)}
   .destaque{grid-column:1 / -1;background:linear-gradient(135deg,var(--laranja),#FF9A40);border:none}
-  .destaque .rotulo,.destaque .pe{color:#fff;opacity:.92}
-  .destaque .valor{color:#fff;font-size:28px}
+  .destaque .rotulo,.destaque .pe{color:#fff;opacity:.92}.destaque .valor{color:#fff;font-size:27px}
+  .explica{background:var(--laranja-claro);border-radius:12px;padding:11px 14px;font-size:13px;
+    color:var(--laranja-escuro);margin-bottom:16px}
+  .explica b{color:var(--laranja-escuro)}
 
-  h2.secao{font-size:16px;margin:4px 0 14px;display:flex;align-items:center;gap:8px}
-  .blocos{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:22px}
-
-  /* ===== Barras categoria ===== */
+  h2.secao{font-size:16px;margin:2px 0 14px;display:flex;align-items:center;gap:8px}
   .barra-linha{margin-bottom:14px;font-size:14px}
   .barra-topo{display:flex;justify-content:space-between;margin-bottom:6px}
   .barra-val{color:var(--cinza);font-variant-numeric:tabular-nums}
   .barra-trilho{background:var(--cinza-claro);border-radius:8px;height:12px;overflow:hidden}
   .barra-fill{height:100%;border-radius:8px;background:var(--laranja)}
 
-  /* ===== Receita por cliente ===== */
-  .cli{display:flex;justify-content:space-between;align-items:center;
-    padding:13px 0;border-bottom:1px solid var(--borda)}
-  .cli:last-child{border-bottom:none}
-  .cli .nome{font-weight:600}
-  .cli .det{font-size:12px;color:var(--cinza)}
-  .pill{padding:4px 12px;border-radius:999px;font-size:14px;font-weight:700;white-space:nowrap}
-  .pill.pos{background:#E6F6EE;color:var(--verde)}
-
-  /* ===== Lançamentos como CARDS (ótimo no celular) ===== */
-  .aviso-edita{background:var(--laranja-claro);border:1px dashed var(--laranja);
-    color:var(--laranja-escuro);border-radius:12px;padding:11px 14px;font-size:13px;margin-bottom:14px}
-  .lanc{border:1px solid var(--borda);border-radius:14px;padding:13px;margin-bottom:12px}
-  .lanc-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}
+  /* Revisar */
+  .topo-revisar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+  .contador{color:var(--cinza);font-size:13px}
+  .btn{font-family:inherit;font-size:14px;font-weight:700;border:none;border-radius:10px;padding:10px 14px;
+    cursor:pointer}
+  .btn-ghost{background:#fff;border:1px solid var(--laranja);color:var(--laranja)}
+  .btn-laranja{background:var(--laranja);color:#fff;width:100%;padding:13px;font-size:15px}
+  .dica{background:var(--laranja-claro);border:1px dashed var(--laranja);color:var(--laranja-escuro);
+    border-radius:12px;padding:11px 14px;font-size:13px;margin:10px 0 16px}
+  .lanc{background:#fff;border:1px solid var(--borda);border-radius:14px;padding:14px;margin-bottom:12px}
+  .lanc-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
   .lanc .desc{font-weight:600;font-size:15px}
   .lanc .data{color:var(--cinza);font-size:12px;margin-top:2px}
   .neg-val{color:var(--vermelho);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
   .pos-val{color:var(--verde);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .campos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .campos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
   .campo label{display:block;font-size:11px;color:var(--cinza);margin-bottom:3px;text-transform:uppercase;letter-spacing:.02em}
-  select{width:100%;font-family:inherit;font-size:16px;padding:9px 10px;border:1px solid var(--borda);
-    border-radius:10px;background:#fff;color:var(--texto);cursor:pointer;
-    appearance:none;-webkit-appearance:none;
+  select{width:100%;font-family:inherit;font-size:16px;padding:10px;border:1px solid var(--borda);border-radius:10px;
+    background:#fff;color:var(--texto);cursor:pointer;appearance:none;-webkit-appearance:none;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='3'><path d='M6 9l6 6 6-6'/></svg>");
     background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
   select:focus{outline:2px solid var(--laranja);border-color:var(--laranja)}
-  .salvo{display:inline-block;color:var(--verde);font-size:12px;font-weight:700;opacity:0;transition:opacity .2s}
-  .salvo.show{opacity:1}
+  .acoes{display:flex;gap:8px}
+  .btn-aprovar{flex:1;background:var(--verde);color:#fff;border:none;border-radius:10px;padding:12px;
+    font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+  .vazio{text-align:center;padding:40px 20px;color:var(--cinza)}
+  .vazio .emoji{font-size:48px;display:block;margin-bottom:10px}
 
-  footer{text-align:center;color:var(--cinza);font-size:12px;padding:26px 16px 36px}
+  /* A pagar */
+  .total-pagar{background:linear-gradient(135deg,#FF7A00,#FF9A40);color:#fff;border-radius:16px;
+    padding:18px;margin-bottom:16px}
+  .total-pagar .r{font-size:13px;opacity:.92}.total-pagar .v{font-size:28px;font-weight:800;margin-top:4px}
+  .conta{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--borda)}
+  .conta:last-child{border-bottom:none}
+  .conta .nome{font-weight:600}.conta .venc{font-size:12px;color:var(--cinza);margin-top:2px}
+  .conta .valor{font-weight:700;font-variant-numeric:tabular-nums}
+  .badge-venc{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;margin-left:6px}
+  .b-perto{background:#FCE9E7;color:var(--vermelho)}.b-ok{background:var(--verde-claro);color:var(--verde)}
+
+  /* Nav inferior */
+  nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--borda);
+    display:flex;justify-content:space-around;padding:8px 4px;padding-bottom:calc(8px + env(safe-area-inset-bottom));z-index:20}
+  nav button{background:none;border:none;font-family:inherit;color:var(--cinza);font-size:11px;font-weight:600;
+    display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 12px;position:relative}
+  nav button .ic{font-size:20px}
+  nav button.on{color:var(--laranja)}
+  nav .pino{position:absolute;top:-2px;right:6px;background:var(--vermelho);color:#fff;font-size:10px;font-weight:800;
+    min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+
+  footer{text-align:center;color:var(--cinza);font-size:12px;padding:20px 16px}
   .tag-proto{background:#FFE6CC;color:var(--laranja-escuro);padding:2px 8px;border-radius:6px;font-weight:700;font-size:12px}
-
-  /* ===== Desktop / telas largas ===== */
-  @media(min-width:760px){
-    .wrap{padding:24px}
-    .kpis{grid-template-columns:repeat(4,1fr)}
-    .destaque{grid-column:auto}
-    .destaque .valor{font-size:26px}
-    .blocos{grid-template-columns:1fr 1fr}
-    .campos{grid-template-columns:1fr 1fr 1fr}
-    .saudacao{font-size:22px}
-  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <div class="foguete">🚀</div>
-    <div>Decola <span class="marca">Finanças</span></div>
-  </div>
+  <div class="logo"><div class="foguete">🚀</div><div>Decola <span class="marca">Finanças</span></div></div>
   <div class="avatar">E</div>
 </header>
 
-<div class="wrap">
-
+<!-- ===== RESUMO ===== -->
+<div class="wrap view on" id="view-resumo">
   <div class="saudacao">Olá, Edson! 👋</div>
   <div class="negocio">Reformas &amp; Construções · resumo do seu dinheiro</div>
+  <div class="periodo"><span>Semana</span><span class="on">Junho</span><span>Ano</span></div>
 
-  <div class="periodo">
-    <span>Esta semana</span><span class="on">Junho</span><span>Este ano</span>
-  </div>
-
-  <!-- KPIs do mês -->
   <div class="kpis">
-    <div class="card kpi">
-      <div class="rotulo">⬆️ Entrou</div>
-      <div class="valor v-entrou">R$ 38.500</div>
-      <div class="pe">recebido de clientes</div>
-    </div>
-    <div class="card kpi">
-      <div class="rotulo">⬇️ Saiu</div>
-      <div class="valor v-saiu">R$ 27.180</div>
-      <div class="pe">custos + despesas</div>
-    </div>
-    <div class="card kpi destaque">
-      <div class="rotulo">✅ Sobrou no mês</div>
-      <div class="valor">R$ 11.320</div>
-      <div class="pe">o que ficou de junho</div>
-    </div>
-    <div class="card kpi">
-      <div class="rotulo">💰 Sua retirada</div>
-      <div class="valor v-retirada">R$ 6.000</div>
-      <div class="pe">o que você tirou pra você</div>
-    </div>
+    <div class="card kpi"><div class="rotulo">⬆️ Entrou</div>
+      <div class="valor v-entrou">R$ 38.500</div><div class="pe">recebido no mês</div></div>
+    <div class="card kpi"><div class="rotulo">🏗️ Custos da empresa</div>
+      <div class="valor v-saiu">R$ 24.380</div><div class="pe">material, equipe, etc.</div></div>
+    <div class="card kpi destaque"><div class="rotulo">✅ Sobrou — é seu</div>
+      <div class="valor">R$ 14.120</div><div class="pe">o lucro do mês</div></div>
+    <div class="card kpi"><div class="rotulo">💰 Você já usou pra você</div>
+      <div class="valor v-retirada">R$ 6.540</div><div class="pe">retirada + gastos pessoais</div></div>
   </div>
 
-  <div class="blocos">
-    <!-- Para onde foi o dinheiro (MÊS) -->
-    <div class="card">
-      <h2 class="secao">📊 Pra onde foi o dinheiro <span class="tag-proto">em junho</span></h2>
-      <div class="barra-linha">
-        <div class="barra-topo"><span>Material</span><span class="barra-val">R$ 12.400</span></div>
-        <div class="barra-trilho"><div class="barra-fill" style="width:100%"></div></div>
-      </div>
-      <div class="barra-linha">
-        <div class="barra-topo"><span>Equipe / mão de obra</span><span class="barra-val">R$ 8.800</span></div>
-        <div class="barra-trilho"><div class="barra-fill" style="width:71%"></div></div>
-      </div>
-      <div class="barra-linha">
-        <div class="barra-topo"><span>Sua retirada</span><span class="barra-val">R$ 6.000</span></div>
-        <div class="barra-trilho"><div class="barra-fill" style="width:48%"></div></div>
-      </div>
-      <div class="barra-linha">
-        <div class="barra-topo"><span>Transporte / frete</span><span class="barra-val">R$ 1.850</span></div>
-        <div class="barra-trilho"><div class="barra-fill" style="width:15%"></div></div>
-      </div>
-      <div class="barra-linha">
-        <div class="barra-topo"><span>Impostos / tarifas</span><span class="barra-val">R$ 1.330</span></div>
-        <div class="barra-trilho"><div class="barra-fill" style="width:11%"></div></div>
-      </div>
-    </div>
-
-    <!-- Receita por cliente/serviço (só RECEITA — custo não dá por serviço) -->
-    <div class="card">
-      <h2 class="secao">👥 Quanto cada cliente te pagou</h2>
-      <div class="cli">
-        <div><div class="nome">Dona Marta</div><div class="det">Reforma do apartamento</div></div>
-        <div class="pill pos">R$ 18.000</div>
-      </div>
-      <div class="cli">
-        <div><div class="nome">Cond. Jardins</div><div class="det">Muro e calçada</div></div>
-        <div class="pill pos">R$ 11.000</div>
-      </div>
-      <div class="cli">
-        <div><div class="nome">Sr. Paulo</div><div class="det">Pintura da loja</div></div>
-        <div class="pill pos">R$ 9.500</div>
-      </div>
-    </div>
+  <div class="explica">
+    💡 O que <b>sobrou (R$ 14.120)</b> é seu. Desse valor você já usou <b>R$ 6.540</b> pra você
+    (retirada + pessoal). Ainda dá pra tirar <b>R$ 7.580</b>.
   </div>
 
-  <!-- Lançamentos editáveis -->
   <div class="card">
-    <h2 class="secao">🧾 Seus lançamentos <span class="tag-proto">classificados automaticamente</span></h2>
-    <div class="aviso-edita">
-      ✏️ <b>Classificamos pra você.</b> Errou? É só trocar — ex.: "isso não é da empresa, é meu". O painel se ajusta sozinho.
-    </div>
-    <div id="lista"><!-- preenchido via JS --></div>
+    <h2 class="secao">🏗️ Custos da empresa <span class="tag-proto">em junho</span></h2>
+    <div class="barra-linha"><div class="barra-topo"><span>Material</span><span class="barra-val">R$ 12.400</span></div>
+      <div class="barra-trilho"><div class="barra-fill" style="width:100%"></div></div></div>
+    <div class="barra-linha"><div class="barra-topo"><span>Equipe / mão de obra</span><span class="barra-val">R$ 8.800</span></div>
+      <div class="barra-trilho"><div class="barra-fill" style="width:71%"></div></div></div>
+    <div class="barra-linha"><div class="barra-topo"><span>Transporte / frete</span><span class="barra-val">R$ 1.850</span></div>
+      <div class="barra-trilho"><div class="barra-fill" style="width:15%"></div></div></div>
+    <div class="barra-linha"><div class="barra-topo"><span>Impostos / tarifas</span><span class="barra-val">R$ 1.330</span></div>
+      <div class="barra-trilho"><div class="barra-fill" style="width:11%"></div></div></div>
   </div>
-
 </div>
 
-<footer>
-  🚀 <b>Decola Finanças</b> — protótipo com <b>dados de exemplo</b>.
-  Nenhuma conta de banco real conectada aqui.
-</footer>
+<!-- ===== REVISAR ===== -->
+<div class="wrap view" id="view-revisar">
+  <div class="topo-revisar">
+    <div><h2 class="secao" style="margin-bottom:2px">✅ Revisar lançamentos</h2>
+      <div class="contador" id="contador">— pendentes</div></div>
+    <button class="btn btn-ghost" id="aprovarTodos">Aprovar todos</button>
+  </div>
+  <div class="dica">
+    Classificamos pra você. <b>Confira e aprove.</b> Se erramos, troque os campos e aprove.
+    Depois de aprovar, o lançamento sai daqui (mas você pode reclassificar quando quiser).
+  </div>
+  <div id="lista"></div>
+  <div class="vazio" id="vazio" style="display:none">
+    <span class="emoji">🎉</span>
+    <b>Tudo revisado!</b><br>Nada pendente por aqui.
+  </div>
+</div>
+
+<!-- ===== A PAGAR ===== -->
+<div class="wrap view" id="view-pagar">
+  <div class="saudacao" style="margin-bottom:14px">📅 Contas a pagar</div>
+  <div class="total-pagar">
+    <div class="r">Total previsto este mês</div>
+    <div class="v">R$ 3.650</div>
+  </div>
+  <div class="card">
+    <h2 class="secao">Custos fixos do mês</h2>
+    <div class="conta"><div><div class="nome">Aluguel do galpão</div>
+      <div class="venc">Vence dia 05 <span class="badge-venc b-perto">em 3 dias</span></div></div>
+      <div class="valor">R$ 1.500</div></div>
+    <div class="conta"><div><div class="nome">Parcela da caminhonete</div>
+      <div class="venc">Vence dia 10 <span class="badge-venc b-ok">em 8 dias</span></div></div>
+      <div class="valor">R$ 1.200</div></div>
+    <div class="conta"><div><div class="nome">Energia</div>
+      <div class="venc">Vence dia 15 <span class="badge-venc b-ok">em 13 dias</span></div></div>
+      <div class="valor">R$ 380</div></div>
+    <div class="conta"><div><div class="nome">Internet e telefone</div>
+      <div class="venc">Vence dia 20 <span class="badge-venc b-ok">em 18 dias</span></div></div>
+      <div class="valor">R$ 220</div></div>
+    <div class="conta"><div><div class="nome">Contador</div>
+      <div class="venc">Vence dia 25 <span class="badge-venc b-ok">em 23 dias</span></div></div>
+      <div class="valor">R$ 350</div></div>
+  </div>
+  <div class="dica">💡 Esses são os custos fixos que se repetem todo mês. Em breve dá pra adicionar/editar.</div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <button class="on" data-view="resumo"><span class="ic">📊</span>Resumo</button>
+  <button data-view="revisar"><span class="ic">✅</span>Revisar<span class="pino" id="pino">6</span></button>
+  <button data-view="pagar"><span class="ic">📅</span>A pagar</button>
+</nav>
 
 <script>
-  const categorias = ["Material","Equipe / mão de obra","Transporte / frete",
-    "Impostos / tarifas","Sua retirada","Despesa pessoal","Recebimento","Outros"];
-  const tipos = ["Custo da empresa","Equipe","Sua retirada","Pessoal","Recebimento"];
-  const clientes = ["Dona Marta","Sr. Paulo","Cond. Jardins","— (não é de cliente)"];
+  // 2 CAMPOS apenas: "De quem é?" e "O que é?"
+  const origens = ["Da empresa","Seu (pessoal)"];
+  const naturezas = ["Recebimento","Material","Equipe / mão de obra","Transporte / frete",
+    "Impostos / tarifas","Sua retirada","Gasto pessoal","Outro"];
 
-  const lancamentos = [
-    {desc:"Recebimento PIX — Dona Marta", data:"15 jun", valor:18000, cat:"Recebimento", tipo:"Recebimento", cli:"Dona Marta"},
-    {desc:"Leroy Merlin — cimento e areia", data:"14 jun", valor:-2340, cat:"Material", tipo:"Custo da empresa", cli:"— (não é de cliente)"},
-    {desc:"Pagamento ajudante — José", data:"13 jun", valor:-1200, cat:"Equipe / mão de obra", tipo:"Equipe", cli:"— (não é de cliente)"},
-    {desc:"Posto Shell — combustível", data:"12 jun", valor:-280, cat:"Transporte / frete", tipo:"Custo da empresa", cli:"— (não é de cliente)"},
-    {desc:"Supermercado Extra", data:"11 jun", valor:-540, cat:"Despesa pessoal", tipo:"Pessoal", cli:"— (não é de cliente)"},
-    {desc:"Transferência p/ sua conta", data:"10 jun", valor:-6000, cat:"Sua retirada", tipo:"Sua retirada", cli:"— (não é de cliente)"},
-    {desc:"Tinta Suvinil — 20L", data:"09 jun", valor:-890, cat:"Material", tipo:"Custo da empresa", cli:"— (não é de cliente)"},
-    {desc:"Tarifa bancária", data:"08 jun", valor:-49, cat:"Impostos / tarifas", tipo:"Custo da empresa", cli:"— (não é de cliente)"},
+  let lancamentos = [
+    {desc:"Recebimento PIX", data:"15 jun", valor:18000, origem:"Da empresa", nat:"Recebimento"},
+    {desc:"Leroy Merlin", data:"14 jun", valor:-2340, origem:"Da empresa", nat:"Material"},
+    {desc:"Pagamento ajudante — José", data:"13 jun", valor:-1200, origem:"Da empresa", nat:"Equipe / mão de obra"},
+    {desc:"Posto Shell", data:"12 jun", valor:-280, origem:"Da empresa", nat:"Transporte / frete"},
+    {desc:"Supermercado Extra", data:"11 jun", valor:-540, origem:"Seu (pessoal)", nat:"Gasto pessoal"},
+    {desc:"Transferência p/ sua conta", data:"10 jun", valor:-6000, origem:"Seu (pessoal)", nat:"Sua retirada"},
   ];
 
   const fmt = v => (v<0?"- ":"+ ") + "R$ " + Math.abs(v).toLocaleString("pt-BR");
-  const opcoes = (lista, atual) => lista.map(o=>`<option ${o===atual?"selected":""}>${o}</option>`).join("");
+  const opc = (lista, atual) => lista.map(o=>`<option ${o===atual?"selected":""}>${o}</option>`).join("");
 
   const lista = document.getElementById("lista");
-  lancamentos.forEach((l,i)=>{
-    const div = document.createElement("div");
-    div.className = "lanc";
-    div.innerHTML = `
-      <div class="lanc-topo">
-        <div><div class="desc">${l.desc}</div><div class="data">${l.data}</div></div>
-        <div class="${l.valor<0?'neg-val':'pos-val'}">${fmt(l.valor)}</div>
-      </div>
-      <div class="campos">
-        <div class="campo"><label>Categoria</label>
-          <select data-i="${i}">${opcoes(categorias,l.cat)}</select></div>
-        <div class="campo"><label>De quem é?</label>
-          <select data-i="${i}">${opcoes(tipos,l.tipo)}</select></div>
-        <div class="campo"><label>Cliente</label>
-          <select data-i="${i}">${opcoes(clientes,l.cli)}</select></div>
-      </div>
-      <div style="text-align:right;margin-top:6px"><span class="salvo" id="ok${i}">✓ salvo</span></div>
-    `;
-    lista.appendChild(div);
+  const pino = document.getElementById("pino");
+  const contador = document.getElementById("contador");
+  const vazio = document.getElementById("vazio");
+
+  function atualizaContagem(){
+    const n = lancamentos.length;
+    contador.textContent = n + (n===1?" pendente":" pendentes");
+    if(n===0){ pino.style.display="none"; vazio.style.display="block"; document.getElementById("aprovarTodos").style.display="none"; }
+    else { pino.style.display="flex"; pino.textContent=n; vazio.style.display="none"; }
+  }
+
+  function render(){
+    lista.innerHTML = "";
+    lancamentos.forEach((l,idx)=>{
+      const div = document.createElement("div");
+      div.className = "lanc";
+      div.innerHTML = `
+        <div class="lanc-topo">
+          <div><div class="desc">${l.desc}</div><div class="data">${l.data}</div></div>
+          <div class="${l.valor<0?'neg-val':'pos-val'}">${fmt(l.valor)}</div>
+        </div>
+        <div class="campos">
+          <div class="campo"><label>De quem é?</label><select>${opc(origens,l.origem)}</select></div>
+          <div class="campo"><label>O que é?</label><select>${opc(naturezas,l.nat)}</select></div>
+        </div>
+        <div class="acoes">
+          <button class="btn-aprovar" data-idx="${idx}">✓ Aprovar</button>
+        </div>`;
+      lista.appendChild(div);
+    });
+    atualizaContagem();
+  }
+
+  lista.addEventListener("click", e=>{
+    const b = e.target.closest(".btn-aprovar");
+    if(!b) return;
+    const idx = +b.getAttribute("data-idx");
+    lancamentos.splice(idx,1);   // aprovou -> sai da lista de pendências
+    render();
   });
 
-  lista.addEventListener("change", e=>{
-    const i = e.target.getAttribute("data-i");
-    const ok = document.getElementById("ok"+i);
-    if(ok){ ok.classList.add("show"); setTimeout(()=>ok.classList.remove("show"), 1600); }
+  document.getElementById("aprovarTodos").addEventListener("click", ()=>{
+    lancamentos = [];
+    render();
   });
+
+  // Navegação entre abas
+  document.querySelectorAll("nav button").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll("nav button").forEach(b=>b.classList.remove("on"));
+      btn.classList.add("on");
+      document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));
+      document.getElementById("view-"+btn.getAttribute("data-view")).classList.add("on");
+      window.scrollTo(0,0);
+    });
+  });
+
+  render();
 </script>
 </body>
 </html>

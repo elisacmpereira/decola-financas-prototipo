@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Decola Finanças — Protótipo</title>
+<style>
+  :root{
+    --laranja:#FF7A00;
+    --laranja-escuro:#E56700;
+    --laranja-claro:#FFF3E8;
+    --verde:#2B9D5F;
+    --vermelho:#E04A3F;
+    --cinza:#6B7280;
+    --cinza-claro:#F4F5F7;
+    --texto:#1F2430;
+    --borda:#ECECEC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:var(--cinza-claro);
+    color:var(--texto);
+    line-height:1.45;
+  }
+  /* ===== Topo ===== */
+  header{
+    background:#fff;
+    border-bottom:1px solid var(--borda);
+    padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+    position:sticky;top:0;z-index:10;
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px}
+  .logo .marca{color:var(--laranja)}
+  .foguete{
+    width:34px;height:34px;border-radius:9px;
+    background:var(--laranja);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+  }
+  .user{display:flex;align-items:center;gap:10px;color:var(--cinza);font-size:14px}
+  .avatar{width:34px;height:34px;border-radius:50%;background:var(--laranja-claro);
+    color:var(--laranja);font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:24px}
+  .saudacao{margin-bottom:4px;font-size:20px;font-weight:700}
+  .sub{color:var(--cinza);font-size:14px;margin-bottom:22px}
+  .periodo{display:inline-flex;background:#fff;border:1px solid var(--borda);
+    border-radius:999px;padding:4px;gap:4px;margin-left:10px;font-size:13px}
+  .periodo span{padding:4px 12px;border-radius:999px;cursor:pointer;color:var(--cinza)}
+  .periodo span.on{background:var(--laranja);color:#fff;font-weight:600}
+
+  /* ===== Cards KPI ===== */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .card{background:#fff;border:1px solid var(--borda);border-radius:16px;padding:18px}
+  .kpi .rotulo{font-size:13px;color:var(--cinza);display:flex;align-items:center;gap:6px}
+  .kpi .valor{font-size:26px;font-weight:800;margin-top:6px}
+  .kpi .pe{font-size:12px;color:var(--cinza);margin-top:2px}
+  .v-entrou{color:var(--verde)}
+  .v-saiu{color:var(--vermelho)}
+  .v-sobrou{color:var(--laranja)}
+  .destaque{background:linear-gradient(135deg,var(--laranja),#FF9A40);border:none;color:#fff}
+  .destaque .rotulo,.destaque .pe{color:#fff;opacity:.9}
+  .destaque .valor{color:#fff}
+
+  h2.secao{font-size:16px;margin:6px 0 14px;display:flex;align-items:center;gap:8px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+
+  /* ===== Barras categoria ===== */
+  .barra-linha{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:14px}
+  .barra-nome{width:160px;color:var(--texto)}
+  .barra-trilho{flex:1;background:var(--cinza-claro);border-radius:8px;height:14px;overflow:hidden}
+  .barra-fill{height:100%;border-radius:8px;background:var(--laranja)}
+  .barra-val{width:90px;text-align:right;color:var(--cinza);font-variant-numeric:tabular-nums}
+
+  /* ===== Obras ===== */
+  .obra{display:flex;justify-content:space-between;align-items:center;
+    padding:12px 0;border-bottom:1px solid var(--borda)}
+  .obra:last-child{border-bottom:none}
+  .obra .nome{font-weight:600}
+  .obra .det{font-size:12px;color:var(--cinza)}
+  .pill{padding:3px 10px;border-radius:999px;font-size:13px;font-weight:700}
+  .pill.pos{background:#E6F6EE;color:var(--verde)}
+  .pill.neg{background:#FCE9E7;color:var(--vermelho)}
+
+  /* ===== Tabela transações ===== */
+  .tabela{width:100%;border-collapse:collapse;font-size:14px}
+  .tabela th{text-align:left;color:var(--cinza);font-weight:600;font-size:12px;
+    text-transform:uppercase;letter-spacing:.03em;padding:10px 8px;border-bottom:1px solid var(--borda)}
+  .tabela td{padding:10px 8px;border-bottom:1px solid var(--borda)}
+  .tabela tr:hover{background:var(--laranja-claro)}
+  .desc{font-weight:600}
+  .data{color:var(--cinza);font-size:12px}
+  .neg-val{color:var(--vermelho);font-weight:600;font-variant-numeric:tabular-nums}
+  .pos-val{color:var(--verde);font-weight:600;font-variant-numeric:tabular-nums}
+  select{font-family:inherit;font-size:13px;padding:6px 8px;border:1px solid var(--borda);
+    border-radius:8px;background:#fff;color:var(--texto);cursor:pointer;max-width:160px}
+  select:focus{outline:2px solid var(--laranja);border-color:var(--laranja)}
+  .salvo{display:inline-block;margin-left:8px;color:var(--verde);font-size:12px;opacity:0;transition:opacity .2s}
+  .salvo.show{opacity:1}
+  .aviso-edita{background:var(--laranja-claro);border:1px dashed var(--laranja);
+    color:var(--laranja-escuro);border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:14px}
+
+  footer{text-align:center;color:var(--cinza);font-size:12px;padding:30px}
+  .tag-proto{background:#FFE6CC;color:var(--laranja-escuro);padding:2px 8px;border-radius:6px;font-weight:700}
+
+  @media(max-width:780px){
+    .kpis{grid-template-columns:1fr 1fr}
+    .grid2{grid-template-columns:1fr}
+    .barra-nome{width:110px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="foguete">🚀</div>
+    <div>Decola <span class="marca">Finanças</span></div>
+  </div>
+  <div class="user">
+    <span>Edson — Reformas &amp; Construções</span>
+    <div class="avatar">E</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="saudacao">Olá, Edson! 👋</div>
+  <div class="sub">
+    Aqui está o resumo do seu dinheiro
+    <span class="periodo">
+      <span>Semana</span><span class="on">Junho</span><span>Ano</span>
+    </span>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="card kpi">
+      <div class="rotulo">⬆️ Entrou</div>
+      <div class="valor v-entrou">R$ 38.500</div>
+      <div class="pe">recebido de clientes</div>
+    </div>
+    <div class="card kpi">
+      <div class="rotulo">⬇️ Saiu</div>
+      <div class="valor v-saiu">R$ 27.180</div>
+      <div class="pe">custos + despesas</div>
+    </div>
+    <div class="card kpi destaque">
+      <div class="rotulo">✅ Sobrou</div>
+      <div class="valor">R$ 11.320</div>
+      <div class="pe">resultado de junho</div>
+    </div>
+    <div class="card kpi">
+      <div class="rotulo">💰 Seu pró-labore</div>
+      <div class="valor v-sobrou">R$ 6.000</div>
+      <div class="pe">o que você retirou pra você</div>
+    </div>
+  </div>
+
+  <!-- Para onde foi o dinheiro + por obra -->
+  <div class="grid2">
+    <div class="card">
+      <h2 class="secao">📊 Pra onde foi o dinheiro</h2>
+      <div class="barra-linha">
+        <div class="barra-nome">Material de obra</div>
+        <div class="barra-trilho"><div class="barra-fill" style="width:100%"></div></div>
+        <div class="barra-val">R$ 12.400</div>
+      </div>
+      <div class="barra-linha">
+        <div class="barra-nome">Equipe / mão de obra</div>
+        <div class="barra-trilho"><div class="barra-fill" style="width:71%"></div></div>
+        <div class="barra-val">R$ 8.800</div>
+      </div>
+      <div class="barra-linha">
+        <div class="barra-nome">Pró-labore</div>
+        <div class="barra-trilho"><div class="barra-fill" style="width:48%"></div></div>
+        <div class="barra-val">R$ 6.000</div>
+      </div>
+      <div class="barra-linha">
+        <div class="barra-nome">Transporte / frete</div>
+        <div class="barra-trilho"><div class="barra-fill" style="width:15%"></div></div>
+        <div class="barra-val">R$ 1.850</div>
+      </div>
+      <div class="barra-linha">
+        <div class="barra-nome">Impostos / tarifas</div>
+        <div class="barra-trilho"><div class="barra-fill" style="width:11%"></div></div>
+        <div class="barra-val">R$ 1.330</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="secao">🏗️ Resultado por obra / cliente</h2>
+      <div class="obra">
+        <div>
+          <div class="nome">Reforma Ap. 302 — Dona Marta</div>
+          <div class="det">Recebido R$ 18.000 · Custo R$ 11.500</div>
+        </div>
+        <div class="pill pos">+ R$ 6.500</div>
+      </div>
+      <div class="obra">
+        <div>
+          <div class="nome">Pintura Loja — Sr. Paulo</div>
+          <div class="det">Recebido R$ 9.500 · Custo R$ 6.300</div>
+        </div>
+        <div class="pill pos">+ R$ 3.200</div>
+      </div>
+      <div class="obra">
+        <div>
+          <div class="nome">Muro/Calçada — Cond. Jardins</div>
+          <div class="det">Recebido R$ 11.000 · Custo R$ 9.380</div>
+        </div>
+        <div class="pill pos">+ R$ 1.620</div>
+      </div>
+      <div class="obra">
+        <div>
+          <div class="nome">Orçamento Telhado — Família Lima</div>
+          <div class="det">Em andamento · só custos até agora</div>
+        </div>
+        <div class="pill neg">- R$ 1.000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transações com classificação editável -->
+  <div class="card">
+    <h2 class="secao">🧾 Seus lançamentos <span class="tag-proto">classificados automaticamente</span></h2>
+    <div class="aviso-edita">
+      ✏️ <b>Classificamos pra você.</b> Se algo estiver errado, é só trocar no menu — ex.: "isso não é da empresa, é meu". O painel se ajusta sozinho.
+    </div>
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th>Lançamento</th>
+          <th>Valor</th>
+          <th>Categoria</th>
+          <th>De quem é?</th>
+          <th>Obra</th>
+        </tr>
+      </thead>
+      <tbody id="linhas"><!-- preenchido via JS --></tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  🚀 <b>Decola Finanças</b> — protótipo com <b>dados de exemplo</b>.
+  Nenhuma conta de banco real conectada aqui.
+</footer>
+
+<script>
+  // Dados de exemplo (simulam o que viria do Open Finance, já classificados)
+  const categorias = ["Material de obra","Equipe / mão de obra","Transporte / frete",
+    "Impostos / tarifas","Pró-labore","Despesa pessoal","Recebimento","Outros"];
+  const tipos = ["Custo de obra","Equipe","Pró-labore","Pessoal","Empresa","Recebimento"];
+  const obras = ["Ap. 302 — Dona Marta","Loja — Sr. Paulo","Muro — Cond. Jardins",
+    "Telhado — Família Lima","— (sem obra)"];
+
+  const lancamentos = [
+    {desc:"Recebimento PIX — Dona Marta", data:"15/jun", valor:18000, cat:"Recebimento", tipo:"Recebimento", obra:"Ap. 302 — Dona Marta"},
+    {desc:"Leroy Merlin — cimento e areia", data:"14/jun", valor:-2340, cat:"Material de obra", tipo:"Custo de obra", obra:"Ap. 302 — Dona Marta"},
+    {desc:"Pagamento ajudante — José", data:"13/jun", valor:-1200, cat:"Equipe / mão de obra", tipo:"Equipe", obra:"Loja — Sr. Paulo"},
+    {desc:"Posto Shell — combustível", data:"12/jun", valor:-280, cat:"Transporte / frete", tipo:"Custo de obra", obra:"— (sem obra)"},
+    {desc:"Supermercado Extra", data:"11/jun", valor:-540, cat:"Despesa pessoal", tipo:"Pessoal", obra:"— (sem obra)"},
+    {desc:"Transferência p/ conta pessoal", data:"10/jun", valor:-6000, cat:"Pró-labore", tipo:"Pró-labore", obra:"— (sem obra)"},
+    {desc:"Tinta Suvinil — 20L", data:"09/jun", valor:-890, cat:"Material de obra", tipo:"Custo de obra", obra:"Loja — Sr. Paulo"},
+    {desc:"Tarifa bancária", data:"08/jun", valor:-49, cat:"Impostos / tarifas", tipo:"Empresa", obra:"— (sem obra)"},
+  ];
+
+  const fmt = v => (v<0?"- ":"+ ") + "R$ " + Math.abs(v).toLocaleString("pt-BR");
+
+  function opcoes(lista, atual){
+    return lista.map(o=>`<option ${o===atual?"selected":""}>${o}</option>`).join("");
+  }
+
+  const tbody = document.getElementById("linhas");
+  lancamentos.forEach((l,i)=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><div class="desc">${l.desc}</div><div class="data">${l.data}</div></td>
+      <td class="${l.valor<0?'neg-val':'pos-val'}">${fmt(l.valor)}</td>
+      <td><select data-i="${i}" data-campo="cat">${opcoes(categorias,l.cat)}</select></td>
+      <td><select data-i="${i}" data-campo="tipo">${opcoes(tipos,l.tipo)}</select>
+          <span class="salvo" id="ok${i}">✓ salvo</span></td>
+      <td><select data-i="${i}" data-campo="obra">${opcoes(obras,l.obra)}</select></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Feedback "salvo" ao corrigir a classificação (demonstra a edição)
+  tbody.addEventListener("change", e=>{
+    const i = e.target.getAttribute("data-i");
+    const ok = document.getElementById("ok"+i);
+    if(ok){ ok.classList.add("show"); setTimeout(()=>ok.classList.remove("show"), 1600); }
+  });
+</script>
+</body>
+</html>

@@ -106,6 +106,16 @@
   .conta .valor{font-weight:900;font-variant-numeric:tabular-nums;font-size:16px}
   .badge-venc{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;margin-left:6px}
   .b-perto{background:#FCE7E4;color:var(--vermelho)}.b-ok{background:var(--verde-claro);color:var(--verde)}
+  .b-atrasado{background:#FCE7E4;color:var(--vermelho)}.b-pago{background:var(--verde-claro);color:var(--verde)}
+  .grupo{font-weight:800;font-size:14px;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .ponto{width:9px;height:9px;border-radius:50%}
+  .p-verm{background:var(--vermelho)}.p-lar{background:var(--laranja)}.p-verde{background:var(--verde)}
+  .conta.pago .nome{color:var(--cinza)}
+  .conta.pago .valor{color:var(--cinza)}
+  .resumo-pagar{display:flex;gap:16px;margin-top:12px;font-size:12.5px;font-weight:800;flex-wrap:wrap}
+  .atualizado{max-width:760px;margin:0 auto 6px;padding:0 18px;display:flex;align-items:center;gap:6px;
+    color:var(--cinza);font-size:12px;font-weight:700}
+  .atualizado svg{width:13px;height:13px}
 
   nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:6px;
     padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;pointer-events:none}
@@ -132,6 +142,11 @@
   <div class="logo"><div class="foguete">🚀</div><div>Decola <span class="marca">Finanças</span></div></div>
   <div class="avatar">E</div>
 </header>
+
+<div class="atualizado">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+  Atualizado hoje, 17 jun · 14:32
+</div>
 
 <!-- ===== RESUMO ===== -->
 <div class="wrap view on" id="view-resumo">
@@ -187,27 +202,46 @@
 
 <!-- ===== A PAGAR ===== -->
 <div class="wrap view" id="view-pagar">
-  <div class="saudacao" style="margin-bottom:16px">📅 Contas a pagar</div>
-  <div class="total-pagar"><div class="r">Total previsto este mês</div><div class="v">R$ 3.650</div></div>
+  <div class="saudacao" style="margin-bottom:4px">📅 Contas a pagar</div>
+  <div class="negocio">Junho · hoje é dia 17</div>
+
+  <div class="total-pagar">
+    <div class="r">Ainda falta pagar</div>
+    <div class="v">R$ 1.770</div>
+    <div class="resumo-pagar">
+      <span>⚠️ R$ 1.200 atrasado</span>
+      <span>📆 R$ 570 a vencer</span>
+    </div>
+  </div>
+
   <div class="card">
-    <h2 class="secao">Custos fixos do mês</h2>
-    <div class="conta"><div><div class="nome">Aluguel do galpão</div>
-      <div class="venc">Vence dia 05 <span class="badge-venc b-perto">em 3 dias</span></div></div>
-      <div class="valor">R$ 1.500</div></div>
+    <div class="grupo"><span class="ponto p-verm"></span> Atrasado — pague o quanto antes</div>
     <div class="conta"><div><div class="nome">Parcela da caminhonete</div>
-      <div class="venc">Vence dia 10 <span class="badge-venc b-ok">em 8 dias</span></div></div>
+      <div class="venc">Venceu dia 10 <span class="badge-venc b-atrasado">há 7 dias</span></div></div>
       <div class="valor">R$ 1.200</div></div>
-    <div class="conta"><div><div class="nome">Energia</div>
-      <div class="venc">Vence dia 15 <span class="badge-venc b-ok">em 13 dias</span></div></div>
-      <div class="valor">R$ 380</div></div>
+  </div>
+
+  <div class="card">
+    <div class="grupo"><span class="ponto p-lar"></span> A vencer</div>
     <div class="conta"><div><div class="nome">Internet e telefone</div>
-      <div class="venc">Vence dia 20 <span class="badge-venc b-ok">em 18 dias</span></div></div>
+      <div class="venc">Vence dia 20 <span class="badge-venc b-perto">em 3 dias</span></div></div>
       <div class="valor">R$ 220</div></div>
     <div class="conta"><div><div class="nome">Contador</div>
-      <div class="venc">Vence dia 25 <span class="badge-venc b-ok">em 23 dias</span></div></div>
+      <div class="venc">Vence dia 25 <span class="badge-venc b-ok">em 8 dias</span></div></div>
       <div class="valor">R$ 350</div></div>
   </div>
-  <div class="dica"><span>💡</span><div>Esses são os custos que se repetem todo mês. Em breve dá pra adicionar e editar.</div></div>
+
+  <div class="card">
+    <div class="grupo"><span class="ponto p-verde"></span> Já pago neste mês</div>
+    <div class="conta pago"><div><div class="nome">Aluguel do galpão</div>
+      <div class="venc">Pago dia 05 <span class="badge-venc b-pago">✓ pago</span></div></div>
+      <div class="valor">R$ 1.500</div></div>
+    <div class="conta pago"><div><div class="nome">Energia</div>
+      <div class="venc">Pago dia 15 <span class="badge-venc b-pago">✓ pago</span></div></div>
+      <div class="valor">R$ 380</div></div>
+  </div>
+
+  <div class="dica"><span>💡</span><div>O Decola acompanha os vencimentos e te avisa quando algo está perto de vencer ou atrasou.</div></div>
 </div>
 
 <!-- ===== NAV ===== -->
